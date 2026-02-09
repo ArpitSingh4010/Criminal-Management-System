@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Criminal_Mangement" default="war" basedir=".">
+    <description>Build file for Criminal Management Web Application</description>
+    
+    <!-- Properties -->
+    <property name="src.dir" value="src/main/java"/>
+    <property name="web.dir" value="src/main/webapp"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="lib.dir" value="${web.dir}/WEB-INF/lib"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="war.name" value="criminal.war"/>
+    
+    <!-- Classpath -->
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <!-- Add servlet-api from Tomcat -->
+        <fileset dir="${env.CATALINA_HOME}/lib" erroronmissingdir="false">
+            <include name="servlet-api.jar"/>
+            <include name="jakarta.servlet-api-*.jar"/>
+        </fileset>
+    </path>
+    
+    <!-- Clean -->
+    <target name="clean">
+        <delete dir="${classes.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+    
+    <!-- Init -->
+    <target name="init" depends="clean">
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
+    
+    <!-- Compile -->
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" 
+               destdir="${classes.dir}" 
+               includeantruntime="false"
+               encoding="UTF-8">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+    
+    <!-- Create WAR -->
+    <target name="war" depends="compile">
+        <war destfile="${dist.dir}/${war.name}" webxml="${web.dir}/WEB-INF/web.xml">
+            <fileset dir="${web.dir}">
+                <exclude name="WEB-INF/web.xml"/>
+            </fileset>
+            <classes dir="${classes.dir}"/>
+            <lib dir="${lib.dir}"/>
+        </war>
+        <echo message="WAR file created: ${dist.dir}/${war.name}"/>
+    </target>
+</project>
