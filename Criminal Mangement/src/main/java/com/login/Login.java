@@ -30,11 +30,9 @@ public class Login extends HttpServlet {
 	  LoginDao dao=new LoginDao();
 	  
 	  try {
-		  String role = dao.check(username,password);
-		  if(role != null) {
+		  if(dao.check(username,password)) {
 			  HttpSession session=req.getSession();
 				session.setAttribute("username",username);
-				session.setAttribute("role", role);
 			    res.sendRedirect("Home.jsp");
 			} else {
 			    res.sendRedirect("Login.jsp?error=1");

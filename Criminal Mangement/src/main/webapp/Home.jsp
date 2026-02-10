@@ -284,17 +284,6 @@ body {
                 <h3>Crime Reports</h3>
                 <p>Statistical analysis and crime trend reports</p>
             </a>
-
-            <% if ("admin".equals(session.getAttribute("role"))) { %>
-            <style>
-                .module-card.admin { border-top-color: #f1c40f; }
-            </style>
-            <a href="Users.jsp" class="module-card admin">
-                <div class="module-icon">⚙️</div>
-                <h3>Manage Users</h3>
-                <p>Admin panel to view and delete system users</p>
-            </a>
-            <% } %>
         </div>
     </div>
 

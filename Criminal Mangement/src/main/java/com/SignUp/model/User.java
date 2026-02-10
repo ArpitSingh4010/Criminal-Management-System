@@ -10,7 +10,6 @@ public class User {
     private String email;
     private String password;
     private String phone;
-    private String role;
     
     // Constructors
     public User() {
@@ -22,16 +21,6 @@ public class User {
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.role = "user"; // Default role
-    }
-
-    public User(String username, int age, String email, String password, String phone, String role) {
-        this.username = username;
-        this.age = age;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.role = role;
     }
     
     // Getters and Setters
@@ -82,14 +71,6 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
     
     @Override
     public String toString() {
@@ -99,7 +80,6 @@ public class User {
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", role='" + role + '\'' +
                 '}';
     }
 }

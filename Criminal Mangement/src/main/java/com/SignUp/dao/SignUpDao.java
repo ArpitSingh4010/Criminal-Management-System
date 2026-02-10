@@ -75,7 +75,7 @@ public class SignUpDao {
      * Register a new user
      */
     public boolean registerUser(User user) {
-        String query = "INSERT INTO users (username, age, email, password, phone, role) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO users (username, age, email, password, phone) VALUES (?, ?, ?, ?, ?)";
         
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -85,7 +85,6 @@ public class SignUpDao {
             pstmt.setString(3, user.getEmail());
             pstmt.setString(4, user.getPassword());
             pstmt.setString(5, user.getPhone());
-            pstmt.setString(6, user.getRole());
             
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
