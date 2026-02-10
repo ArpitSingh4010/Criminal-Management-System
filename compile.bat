@@ -42,7 +42,13 @@ javac -d "build\classes" ^
       src\main\java\com\Laws\model\*.java ^
       src\main\java\com\Reports\*.java ^
       src\main\java\com\Reports\dao\*.java ^
-      src\main\java\com\Reports\model\*.java
+      src\main\java\com\Reports\model\*.java ^
+      src\main\java\com\LogOut\*.java ^
+      src\main\java\com\LogOut\dao\*.java ^
+      src\main\java\com\LogOut\model\*.java ^
+      src\main\java\com\SignUp\*.java ^
+      src\main\java\com\SignUp\dao\*.java ^
+      src\main\java\com\SignUp\model\*.java
 
 if %ERRORLEVEL% EQU 0 (
     echo.
