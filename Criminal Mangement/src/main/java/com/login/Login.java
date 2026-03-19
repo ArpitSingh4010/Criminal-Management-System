@@ -33,7 +33,7 @@ public class Login extends HttpServlet {
 		  if(dao.check(username,password)) {
 			  HttpSession session=req.getSession();
 				session.setAttribute("username",username);
-			    res.sendRedirect("Home.jsp");
+			    res.sendRedirect(req.getContextPath() + "/UserDashboard");
 			} else {
 			    res.sendRedirect("Login.jsp?error=1");
 			}

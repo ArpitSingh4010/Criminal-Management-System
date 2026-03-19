@@ -25,9 +25,22 @@ echo Cleaning previous deployment...
 rmdir /S /Q "%TOMCAT_HOME%\webapps\criminal" 2>nul
 del /Q "%TOMCAT_HOME%\webapps\criminal.war" 2>nul
 
+REM Remove stale folders accidentally copied at webapps root
+rmdir /S /Q "%TOMCAT_HOME%\webapps\Criminal Mangement" 2>nul
+rmdir /S /Q "%TOMCAT_HOME%\webapps\Criminal_Management" 2>nul
+
+REM Remove stale JSPs that may exist directly under webapps root
+for %%F in ("%PROJECT_DIR%\src\main\webapp\*.jsp") do (
+    del /Q "%TOMCAT_HOME%\webapps\%%~nxF" 2>nul
+)
+
 echo Copying application files...
-xcopy "%PROJECT_DIR%\src\main\webapp" "%TOMCAT_HOME%\webapps\criminal\" /E /I /Y
-xcopy "%PROJECT_DIR%\build\classes" "%TOMCAT_HOME%\webapps\criminal\WEB-INF\classes\" /E /I /Y
+mkdir "%TOMCAT_HOME%\webapps\criminal" 2>nul
+mkdir "%TOMCAT_HOME%\webapps\criminal\WEB-INF\classes" 2>nul
+
+REM Copy full web resources and compiled classes into criminal context
+xcopy "%PROJECT_DIR%\src\main\webapp\*" "%TOMCAT_HOME%\webapps\criminal\" /E /I /Y /H
+xcopy "%PROJECT_DIR%\build\classes\*" "%TOMCAT_HOME%\webapps\criminal\WEB-INF\classes\" /E /I /Y /H
 
 echo.
 echo Starting Tomcat...

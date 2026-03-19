@@ -229,6 +229,10 @@ body {
                 <div class="signup-link">
                     Not Registered? <a href="${pageContext.request.contextPath}/SignUp.jsp">Register Here</a>
                 </div>
+
+                <div class="AdminLogin-link">
+                    Staff Member? <a href="${pageContext.request.contextPath}/AdminLogin.jsp">Login Here</a>
+                </div>
             </form>
         </div>
     </div>

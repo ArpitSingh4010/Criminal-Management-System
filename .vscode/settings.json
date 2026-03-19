@@ -3,7 +3,7 @@
     {
       "name": "Tomcat v10.1.52",
       "catalinaHome": "C:\\apache-tomcat-10.1.52",
-      "deploymentPort": 8080
+      "deploymentPort": 8081
     }
   ],
   "local-tomcat.warDir": "Criminal Mangement/dist"

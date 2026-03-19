@@ -26,6 +26,10 @@ echo Compiling Java source files...
 javac -d "build\classes" ^
       -cp "src\main\webapp\WEB-INF\lib\*;%TOMCAT_HOME%\lib\*" ^
       -encoding UTF-8 ^
+      src\main\java\com\AdminLogin\*.java ^
+      src\main\java\com\AdminLogin\dao\*.java ^
+      src\main\java\com\AdminCaseType\*.java ^
+      src\main\java\com\AdminCaseType\dao\*.java ^
       src\main\java\com\login\*.java ^
       src\main\java\com\login\dao\*.java ^
       src\main\java\com\Criminals\*.java ^
@@ -48,7 +52,10 @@ javac -d "build\classes" ^
       src\main\java\com\LogOut\model\*.java ^
       src\main\java\com\SignUp\*.java ^
       src\main\java\com\SignUp\dao\*.java ^
-      src\main\java\com\SignUp\model\*.java
+      src\main\java\com\SignUp\model\*.java ^
+      src\main\java\com\Complaint\model\*.java ^
+      src\main\java\com\Complaint\dao\*.java ^
+      src\main\java\com\Complaint\*.java
 
 if %ERRORLEVEL% EQU 0 (
     echo.

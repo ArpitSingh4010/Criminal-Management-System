@@ -395,13 +395,13 @@
                     <p>National Crime Records Bureau</p>
                 </div>
             </div>
-            <a href="Home.jsp" class="back-btn">← Back to Home</a>
+            <a href="${pageContext.request.contextPath}/UserDashboard" class="back-btn">← Back to Dashboard</a>
         </div>
     </div>
 
     <div class="breadcrumb">
         <div class="breadcrumb-content">
-            <a href="Home.jsp">Home</a> / Reports & Analytics
+            <a href="${pageContext.request.contextPath}/UserDashboard">Dashboard</a> / Reports & Analytics
         </div>
     </div>
 
