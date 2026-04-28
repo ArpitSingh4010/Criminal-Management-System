@@ -1,10 +1,13 @@
 package com.AdminLogin.dao;
 
+import com.login.dao.DbConnectionLog;
+
 import java.sql.*;
 import java.util.*;
 
 public class AdminLoginDao {
     private Connection getConnection() throws ClassNotFoundException, SQLException {
+        DbConnectionLog.logConnectionLifecycleOnce();
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection(
             "jdbc:mysql://localhost:3306/management?useSSL=false&serverTimezone=UTC",

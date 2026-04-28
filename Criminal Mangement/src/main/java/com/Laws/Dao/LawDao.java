@@ -1,5 +1,7 @@
 package com.Laws.Dao;
 
+import com.login.dao.DbConnectionLog;
+
 import java.sql.*;
 import java.util.*;
 import com.Laws.model.Law;
@@ -7,10 +9,12 @@ import com.Laws.model.Law;
 public class LawDao {
     
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
+        DbConnectionLog.logConnectionLifecycleOnce();
+        Connection con = DriverManager.getConnection(
             "jdbc:mysql://localhost:3306/management?useSSL=false&serverTimezone=UTC", 
             "root", 
             "Ayush@25");
+        return con;
     }
 
     public List<Law> getAllLaws() {

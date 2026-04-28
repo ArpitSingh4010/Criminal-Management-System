@@ -1,6 +1,6 @@
 @echo off
 echo ============================================
-echo Criminal Management - Manual Deployment
+echo Criminal Management - Deploy to Tomcat
 echo ============================================
 echo.
 
@@ -8,50 +8,58 @@ REM Set Tomcat path
 set TOMCAT_HOME=C:\apache-tomcat-10.1.52
 set CATALINA_HOME=C:\apache-tomcat-10.1.52
 set JAVA_HOME=C:\Program Files\Java\jdk-22
+set TOMCAT_PORT=8081
 set PROJECT_DIR=%~dp0Criminal Mangement
 
-if not exist "%TOMCAT_HOME%" (
+REM Verify Tomcat exists
+if not exist "%TOMCAT_HOME%\bin\catalina.bat" (
     echo ERROR: Tomcat not found at %TOMCAT_HOME%
-    echo Please download Tomcat and update TOMCAT_HOME in this file
+    echo Please verify the path and update TOMCAT_HOME in this script
     pause
     exit /b 1
 )
 
-echo Stopping Tomcat if running...
+REM Check if WAR file exists
+REM Check if built application exists
+if not exist "%PROJECT_DIR%\build\criminal\WEB-INF" (
+    echo ERROR: Application not built at %PROJECT_DIR%\build\criminal
+    echo Please run compile.bat first
+    pause
+    exit /b 1
+)
+
+echo Stopping Tomcat...
 call "%TOMCAT_HOME%\bin\shutdown.bat" 2>nul
-timeout /t 3 /nobreak >nul
+timeout /t 5 /nobreak >nul
 
 echo Cleaning previous deployment...
 rmdir /S /Q "%TOMCAT_HOME%\webapps\criminal" 2>nul
 del /Q "%TOMCAT_HOME%\webapps\criminal.war" 2>nul
 
-REM Remove stale folders accidentally copied at webapps root
-rmdir /S /Q "%TOMCAT_HOME%\webapps\Criminal Mangement" 2>nul
-rmdir /S /Q "%TOMCAT_HOME%\webapps\Criminal_Management" 2>nul
+echo Deploying application...
+xcopy "%PROJECT_DIR%\build\criminal\*" "%TOMCAT_HOME%\webapps\criminal\" /E /I /Y /Q
 
-REM Remove stale JSPs that may exist directly under webapps root
-for %%F in ("%PROJECT_DIR%\src\main\webapp\*.jsp") do (
-    del /Q "%TOMCAT_HOME%\webapps\%%~nxF" 2>nul
+if %ERRORLEVEL% NEQ 0 (
+    echo ERROR: Failed to copy application files
+    pause
+    exit /b 1
 )
 
-echo Copying application files...
-mkdir "%TOMCAT_HOME%\webapps\criminal" 2>nul
-mkdir "%TOMCAT_HOME%\webapps\criminal\WEB-INF\classes" 2>nul
-
-REM Copy full web resources and compiled classes into criminal context
-xcopy "%PROJECT_DIR%\src\main\webapp\*" "%TOMCAT_HOME%\webapps\criminal\" /E /I /Y /H
-xcopy "%PROJECT_DIR%\build\classes\*" "%TOMCAT_HOME%\webapps\criminal\WEB-INF\classes\" /E /I /Y /H
-
 echo.
-echo Starting Tomcat...
-start "" "%TOMCAT_HOME%\bin\startup.bat"
+echo Starting Tomcat in foreground...
 
 echo.
 echo ============================================
-echo Server starting on PORT 8081...
-echo Access your app at: http://localhost:8081/criminal/Login.jsp
+echo Deployment complete!
 echo ============================================
-timeout /t 5
-start http://localhost:8081/criminal/Login.jsp
+echo.
+echo Access application at:
+echo http://localhost:%TOMCAT_PORT%/criminal/Login.jsp
+echo.
+echo Tomcat logs will stream in this terminal.
+echo Press Ctrl+C to stop Tomcat.
+echo ============================================
 
-pause
+start "" "http://localhost:%TOMCAT_PORT%/criminal/Login.jsp"
+call "%TOMCAT_HOME%\bin\catalina.bat" run
+

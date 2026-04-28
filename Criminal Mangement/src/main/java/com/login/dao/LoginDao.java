@@ -3,8 +3,9 @@ package com.login.dao;
 import java.sql.*;
 
 public class LoginDao {
+
 	public boolean check(String username,String password) throws ClassNotFoundException, SQLException {
-		
+		DbConnectionLog.logConnectionLifecycleOnce();
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
 		Connection con = DriverManager.getConnection(

@@ -1,6 +1,7 @@
 package com.LogOut.dao;
 
 import com.LogOut.model.LogoutLog;
+import com.login.dao.DbConnectionLog;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,8 +22,10 @@ public class LogoutDao {
      * Establishes and returns a database connection
      */
     private Connection getConnection() throws ClassNotFoundException, SQLException {
+        DbConnectionLog.logConnectionLifecycleOnce();
         Class.forName("com.mysql.cj.jdbc.Driver");
-        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        return conn;
     }
     
     /**

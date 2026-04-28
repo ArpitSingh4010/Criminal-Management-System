@@ -1,6 +1,7 @@
 package com.Complaint.dao;
 
 import com.Complaint.model.Complaint;
+import com.login.dao.DbConnectionLog;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,8 +18,10 @@ public class ComplaintDao {
     private static final String DB_PASSWORD = "Ayush@25";
 
     private Connection getConnection() throws ClassNotFoundException, SQLException {
+        DbConnectionLog.logConnectionLifecycleOnce();
         Class.forName("com.mysql.cj.jdbc.Driver");
-        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        return conn;
     }
 
     /**
